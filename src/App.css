@@ -2,6 +2,7 @@
   background: black;  
 } */
 
+
 .App {
   text-align: center;
 }
@@ -39,4 +40,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Override the deprecated color-adjust property */
+:root {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
