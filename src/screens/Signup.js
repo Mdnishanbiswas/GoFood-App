@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate from react-router-dom
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported
 
-export default function Login() {
-    const [credentials, setCredentials] = useState({ email: "", password: "" });
+export default function Signup() {
+    const [credentials, setCredentials] = useState({ name: "", email: "", password: "", geolocation: "" });
     const [error, setError] = useState(null);
-    const navigate = useNavigate(); // Initialize useNavigate hook
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         setError(null); // Reset error before submission
 
         try {
-            const response = await fetch("http://localhost:5000/api/loginuser", {
+            const response = await fetch("http://localhost:5000/api/createuser", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ email: credentials.email, password: credentials.password })
+                body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password, location: credentials.geolocation })
             });
 
             if (!response.ok) {
@@ -27,11 +26,8 @@ export default function Login() {
             const json = await response.json();
             console.log(json);
 
-            if (json.success) {
-                // Navigate to homepage upon successful login
-                navigate('/');
-            } else {
-                setError("Enter valid Credentials");
+            if (!json.success) {
+                alert("Enter valid Credentials");
             }
         } catch (error) {
             setError(error.message);
@@ -48,8 +44,14 @@ export default function Login() {
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
+                    <label htmlFor="name" className="form-label">Name</label>
+                    <input type="text" className="form-control" id="name" name="name" value={credentials.name} onChange={onChange} style={{ backgroundColor: 'black', color: 'white' }} />
+                </div>
+
+                <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
                     <input type="email" className="form-control" id="exampleInputEmail1" name="email" value={credentials.email} onChange={onChange} aria-describedby="emailHelp" style={{ backgroundColor: 'black', color: 'white' }} />
+                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                 </div>
 
                 <div className="mb-3">
@@ -57,8 +59,13 @@ export default function Login() {
                     <input type="password" className="form-control" id="exampleInputPassword1" name="password" value={credentials.password} onChange={onChange} style={{ backgroundColor: 'black', color: 'white' }} />
                 </div>
 
-                <button type="submit" className="btn btn-primary">Login</button>
-                <Link to="/signup" className="m-3 btn btn-danger">New User? Signup</Link>
+                <div className="mb-3">
+                    <label htmlFor="geolocation" className="form-label">Address</label>
+                    <input type="text" className="form-control" id="geolocation" name="geolocation" value={credentials.geolocation} onChange={onChange} style={{ backgroundColor: 'black', color: 'white' }} />
+                </div>
+
+                <button type="submit" className="btn btn-primary">Submit</button>
+                <Link to="/login" className="m-3 btn btn-danger">Already a user</Link>
             </form>
         </div>
     );
