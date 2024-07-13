@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported
+import { Link } from 'react-router-dom';
 
 export default function Signup() {
     const [credentials, setCredentials] = useState({ name: "", email: "", password: "", geolocation: "" });
@@ -8,7 +7,7 @@ export default function Signup() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setError(null); // Reset error before submission
+        setError(null);
 
         try {
             const response = await fetch("http://localhost:5000/api/createuser", {
@@ -16,7 +15,12 @@ export default function Signup() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password, location: credentials.geolocation })
+                body: JSON.stringify({
+                    name: credentials.name,
+                    email: credentials.email,
+                    password: credentials.password,
+                    location: credentials.geolocation // Ensure this matches your backend field name
+                })
             });
 
             if (!response.ok) {
@@ -24,10 +28,11 @@ export default function Signup() {
             }
 
             const json = await response.json();
-            console.log(json);
 
-            if (!json.success) {
-                alert("Enter valid Credentials");
+            if (json.success) {
+                alert("User created successfully!");
+            } else {
+                setError("Failed to create user");
             }
         } catch (error) {
             setError(error.message);
@@ -40,28 +45,28 @@ export default function Signup() {
     }
 
     return (
-        <div className='container' style={{ color: 'white' }}>
+        <div className='container' style={{ color: 'black' }}>
             {error && <div className="alert alert-danger">{error}</div>}
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>
-                    <input type="text" className="form-control" id="name" name="name" value={credentials.name} onChange={onChange} style={{ backgroundColor: 'black', color: 'white' }} />
+                    <input type="text" className="form-control" id="name" name="name" value={credentials.name} onChange={onChange} />
                 </div>
 
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" name="email" value={credentials.email} onChange={onChange} aria-describedby="emailHelp" style={{ backgroundColor: 'black', color: 'white' }} />
+                    <input type="email" className="form-control" id="exampleInputEmail1" name="email" value={credentials.email} onChange={onChange} />
                     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                 </div>
 
                 <div className="mb-3">
                     <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                    <input type="password" className="form-control" id="exampleInputPassword1" name="password" value={credentials.password} onChange={onChange} style={{ backgroundColor: 'black', color: 'white' }} />
+                    <input type="password" className="form-control" id="exampleInputPassword1" name="password" value={credentials.password} onChange={onChange} />
                 </div>
 
                 <div className="mb-3">
                     <label htmlFor="geolocation" className="form-label">Address</label>
-                    <input type="text" className="form-control" id="geolocation" name="geolocation" value={credentials.geolocation} onChange={onChange} style={{ backgroundColor: 'black', color: 'white' }} />
+                    <input type="text" className="form-control" id="geolocation" name="geolocation" value={credentials.geolocation} onChange={onChange} />
                 </div>
 
                 <button type="submit" className="btn btn-primary">Submit</button>
