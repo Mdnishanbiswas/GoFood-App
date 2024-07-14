@@ -40,14 +40,14 @@ export default function Signup() {
   };
 
   return (
-    <div className='container'>
+    <div className='container'style={{ color: 'white' }}>
       {error && <div className='alert alert-danger'>{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className='mb-3'>
           <label htmlFor='name' className='form-label'>
             Name
           </label>
-          <input type='text' className='form-control' id='name' name='name' value={credentials.name} onChange={onChange} />
+          <input type='text' className='form-control' id='name' name='name' value={credentials.name} onChange={onChange}  />
         </div>
 
         <div className='mb-3'>

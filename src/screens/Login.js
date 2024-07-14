@@ -42,7 +42,7 @@ export default function Login({ handleLogin }) {
   };
 
   return (
-    <div className='container'>
+    <div className='container'style={{ color: 'white' }}>
       {error && <div className='alert alert-danger'>{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className='mb-3'>
