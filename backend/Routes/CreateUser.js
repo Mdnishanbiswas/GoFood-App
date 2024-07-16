@@ -26,7 +26,7 @@ router.post('/createuser', [
         user = new User({
             name,
             email,
-            password, // Ensure password is hashed in production
+            password,
             location
         });
 
