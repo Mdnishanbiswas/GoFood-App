@@ -13,10 +13,10 @@ export default function Carousel() {
 
                     </div>
                     <div className="carousel-item active">
-                        <img src="image/burger.jpg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..." />
+                        <img src="https://cdn.pixabay.com/photo/2019/11/04/12/16/rice-4601049__340.jpg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..." />
                     </div>
                     <div className="carousel-item">
-                        <img src="image/momo.jpeg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..." />
+                        <img src="https://cdn.pixabay.com/photo/2019/11/04/12/16/pizza-4601049__340.jpg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..." />
                     </div>
                     <div className="carousel-item">
                         <img src="image/sea.jpeg" className="d-block w-100" style={{ filter: "brightness(30%)" }} alt="..." />
