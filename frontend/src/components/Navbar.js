@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Navbar() {
+export default function Navbar({ authToken, handleLogout }) {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-success">
             <div className="container-fluid">
@@ -21,25 +21,41 @@ export default function Navbar() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ms-auto">
-                        <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" to="/">
-                                Home
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/login">
-                                Login
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/signup">
-                                Signup
-                            </Link>
-                        </li>
+                        {authToken ? (
+                            <>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/myorders">
+                                        My Orders
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/cart">
+                                        Add to Cart
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <button className="btn btn-outline-light" onClick={handleLogout}>
+                                        Logout
+                                    </button>
+                                </li>
+                            </>
+                        ) : (
+                            <>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/login">
+                                        Login
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/signup">
+                                        Signup
+                                    </Link>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>
         </nav>
     );
 }
-
