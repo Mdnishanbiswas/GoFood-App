@@ -26,7 +26,8 @@ export default function Login({ handleLogin }) {
       const json = await response.json();
 
       if (json.success) {
-        handleLogin(json.token);
+        localStorage.setItem("authToken", json.token); // Store the token
+        handleLogin(json.token); // Optional: Call a function to update the app state with the token
         navigate("/");
       } else {
         setError("Login failed");

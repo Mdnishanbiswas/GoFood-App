@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Card from "../components/Card";
 import Carousal from "../components/Carousal";
@@ -31,8 +30,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div style={{ backgroundColor: "#212529", minHeight: "100vh", paddingTop: "60px" }}>
-      <Navbar />
+    <div style={{ backgroundColor: "#212529", minHeight: "100vh" }}>
       <Carousal />
       <div className="container mt-3">
         <input

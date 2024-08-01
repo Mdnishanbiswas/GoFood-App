@@ -1,30 +1,32 @@
-import './App.css';
+import React, { useState } from 'react';
+import Navbar from './components/Navbar';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './screens/Home';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
-import { useState } from 'react';
 
-function App() {
-  // eslint-disable-next-line no-unused-vars
-  const [token, setToken] = useState(null);
+export default function App() {
+  const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || null);
 
   const handleLogin = (token) => {
-    setToken(token);
-    console.log('Token received:', token);
+    setAuthToken(token);
+    localStorage.setItem('authToken', token);
+  };
+
+  const handleLogout = () => {
+    setAuthToken(null);
+    localStorage.removeItem('authToken');
   };
 
   return (
     <Router>
-      <div>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/login" element={<Login handleLogin={handleLogin} />} />
-          <Route exact path="/signup" element={<Signup />} />
-        </Routes>
-      </div>
+      <Navbar authToken={authToken} handleLogout={handleLogout} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login handleLogin={handleLogin} />} />
+        <Route path="/signup" element={<Signup />} />
+        {/* Add more routes as needed */}
+      </Routes>
     </Router>
   );
 }
-
-export default App;
