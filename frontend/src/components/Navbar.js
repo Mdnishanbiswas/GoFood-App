@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from './CardContext';
 
 export default function Navbar({ authToken, handleLogout }) {
+    const { cartItems } = useCart();
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-success">
             <div className="container-fluid">
@@ -21,6 +24,11 @@ export default function Navbar({ authToken, handleLogout }) {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ms-auto">
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/cart">
+                                Cart ({cartItems.length})
+                            </Link>
+                        </li>
                         {authToken ? (
                             <>
                                 <li className="nav-item">

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './screens/Home';
 import Login from './screens/Login';
 import Signup from './screens/Signup';
+import Cart from './components/Cart';
 
 export default function App() {
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || null);
@@ -25,6 +26,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/cart" element={<Cart />} />
+ 
         {/* Add more routes as needed */}
       </Routes>
     </Router>
