@@ -65,5 +65,6 @@ export default function Navbar({ authToken, handleLogout }) {
                 </div>
             </div>
         </nav>
+        
     );
 }

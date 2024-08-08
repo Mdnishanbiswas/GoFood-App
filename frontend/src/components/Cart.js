@@ -50,5 +50,6 @@ export default function Cart() {
                 <h3>Total Expenses: ${calculateTotal().toFixed(2)}</h3>
             </div>
         </div>
+        
     );
 }

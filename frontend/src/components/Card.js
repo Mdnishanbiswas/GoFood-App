@@ -45,5 +45,6 @@ export default function Card({ foodName, item, options, ImgSrc }) {
                 </button>
             </div>
         </div>
+        
     );
 }
