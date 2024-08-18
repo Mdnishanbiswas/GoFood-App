@@ -8,8 +8,13 @@ export default function Card({ foodName, item, options, ImgSrc }) {
 
     const handleAddToCart = () => {
         const selectedPrice = size === 'half' ? options.half : options.full;
+        
+        // Log the details before adding to cart
+        console.log("Adding to cart:", item, quantity, size, selectedPrice);
+    
         addToCart(item, quantity, size, selectedPrice);
     };
+    
 
     return (
         <div className="card mb-3 bg-dark text-white" style={{ maxWidth: "18rem" }}>

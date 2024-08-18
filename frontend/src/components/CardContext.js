@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext ,useCallback} from 'react';
 
 // Create the context
 const CartContext = createContext();
@@ -12,27 +12,44 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([]);
 
-    // Function to add items to the cart
     const addToCart = (item, quantity, size, price) => {
-        const existingItemIndex = cartItems.findIndex(
-            (cartItem) => cartItem.id === item.id && cartItem.size === size
+        // Clone the cart to avoid mutating state directly
+        const cartCopy = [...cartItems];
+      
+        // Check if the item already exists in the cart with the same ID and size
+        const existingItemIndex = cartCopy.findIndex(
+          (cartItem) => cartItem._id === item._id && cartItem.size === size
         );
-
+      
         if (existingItemIndex >= 0) {
-            // If item already exists in cart, update quantity
-            const updatedCartItems = [...cartItems];
-            updatedCartItems[existingItemIndex].quantity += quantity;
-            setCartItems(updatedCartItems);
+          // If item exists, update the quantity
+          cartCopy[existingItemIndex].quantity += quantity;
         } else {
-            // If item is new, add to cart
-            setCartItems([...cartItems, { ...item, quantity, size, price }]);
+          // Add new item to the cart
+          const newItem = {
+            ...item,
+            quantity,
+            size,
+            price,
+          };
+          cartCopy.push(newItem);
         }
-    };
+      
+        // Update the cart state with the new cart data
+        setCartItems(cartCopy);
+      };
+      
+      
+    
+    
+    
 
     // Function to calculate total price
-    const calculateTotal = () => {
-        return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    };
+    const calculateTotal = useCallback(() => {
+        return cartItems.reduce((acc, item) => {
+            return acc + (item.price * item.quantity);
+        }, 0);
+    }, [cartItems]);
 
     // Function to remove item from cart
     const removeFromCart = (id, size) => {
