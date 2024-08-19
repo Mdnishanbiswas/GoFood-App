@@ -4,17 +4,21 @@ import { useCart } from './CardContext';
 export default function Cart() {
     const { cartItems, removeFromCart } = useCart();
 
+    // Calculate total price
     const calculateTotal = useCallback(() => {
-        const total = cartItems.reduce((acc, item) => {
-            return acc + (item.price * item.quantity);
-        }, 0);
+        const total = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
         return total;
-    }, [cartItems]); // useCallback memoizes the function
+    }, [cartItems]);
 
     useEffect(() => {
-        console.log("Cart updated:", cartItems); 
-        console.log("Total price:", calculateTotal()); 
-    }, [cartItems, calculateTotal]);  // Dependency on cartItems and memoized calculateTotal
+        console.log("Cart updated:", cartItems);
+        console.log("Total price:", calculateTotal());
+    }, [cartItems, calculateTotal]);
+
+    const handleRemove = (id, size) => {
+        console.log("Removing item with id:", id, "and size:", size); // Debugging
+        removeFromCart(id, size);
+    };
 
     return (
         <div className="container mt-5">
@@ -37,18 +41,18 @@ export default function Cart() {
                                 <td>
                                     <img
                                         src={item.img}
-                                        alt={item.foodName}
+                                        alt={item.name || "Food Image"}
                                         style={{ width: '100px', height: 'auto' }}
                                     />
                                 </td>
-                                <td>{item.foodName}</td>
+                                <td>{item.name || "No name found"}</td>
                                 <td>{item.size}</td>
                                 <td>{item.quantity}</td>
                                 <td>${(item.price * item.quantity).toFixed(2)}</td>
                                 <td>
                                     <button
                                         className="btn btn-danger"
-                                        onClick={() => removeFromCart(item._id, item.size)}
+                                        onClick={() => handleRemove(item._id, item.size)} // Updated to use handleRemove
                                     >
                                         Remove
                                     </button>
@@ -64,4 +68,3 @@ export default function Cart() {
         </div>
     );
 }
-

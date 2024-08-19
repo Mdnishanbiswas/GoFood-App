@@ -36,11 +36,7 @@ export default function Navbar({ authToken, handleLogout }) {
                                         My Orders
                                     </Link>
                                 </li>
-                                <li className="nav-item">
-                                    <Link className="nav-link" to="/cart">
-                                        Add to Cart
-                                    </Link>
-                                </li>
+                               
                                 <li className="nav-item">
                                     <button className="btn btn-outline-light" onClick={handleLogout}>
                                         Logout
