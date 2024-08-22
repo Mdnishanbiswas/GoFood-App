@@ -1,8 +1,9 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useCart } from './CardContext';
 
 export default function Cart() {
-    const { cartItems, removeFromCart } = useCart();
+    const { cartItems, removeFromCart, clearCart } = useCart(); // Access clearCart function
+    const [orderPlaced, setOrderPlaced] = useState(false);
 
     // Calculate total price
     const calculateTotal = useCallback(() => {
@@ -16,8 +17,16 @@ export default function Cart() {
     }, [cartItems, calculateTotal]);
 
     const handleRemove = (id, size) => {
-        console.log("Removing item with id:", id, "and size:", size); // Debugging
         removeFromCart(id, size);
+    };
+
+    const handleOrder = () => {
+        // Check if the cart has items before placing an order
+        if (cartItems.length > 0) {
+            localStorage.setItem('orders', JSON.stringify(cartItems)); // Store the order
+            setOrderPlaced(true); // Show confirmation
+            clearCart(); // Clear the cart after placing the order
+        }
     };
 
     return (
@@ -52,7 +61,7 @@ export default function Cart() {
                                 <td>
                                     <button
                                         className="btn btn-danger"
-                                        onClick={() => handleRemove(item._id, item.size)} // Updated to use handleRemove
+                                        onClick={() => handleRemove(item._id, item.size)} 
                                     >
                                         Remove
                                     </button>
@@ -65,6 +74,10 @@ export default function Cart() {
             <div className="mt-4">
                 <h3>Total Price: ${calculateTotal().toFixed(2)}</h3>
             </div>
+            <button className="btn btn-primary mt-3" onClick={handleOrder}>
+                Place Order
+            </button>
+            {orderPlaced && <div className="alert alert-success mt-3">Order Placed Successfully!</div>}
         </div>
     );
 }
