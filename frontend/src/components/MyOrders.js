@@ -41,7 +41,9 @@ export default function MyOrders() {
                                     <td>{item.name || "No name found"}</td>
                                     <td>{item.size}</td>
                                     <td>{item.quantity}</td>
-                                    <td>${(item.price * item.quantity).toFixed(2)}</td>
+                                    
+                                    <td>৳{(item.price * item.quantity).toFixed(2)}</td>
+
                                 </tr>
                             ))}
                         </tbody>

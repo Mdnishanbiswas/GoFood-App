@@ -2,8 +2,9 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { useCart } from './CardContext';
 
 export default function Cart() {
-    const { cartItems, removeFromCart, clearCart } = useCart(); // Access clearCart function
+    const { cartItems, removeFromCart, clearCart } = useCart();
     const [orderPlaced, setOrderPlaced] = useState(false);
+    const [totalPrice, setTotalPrice] = useState(0); // New state for total price
 
     // Calculate total price
     const calculateTotal = useCallback(() => {
@@ -21,8 +22,10 @@ export default function Cart() {
     };
 
     const handleOrder = () => {
-        // Check if the cart has items before placing an order
         if (cartItems.length > 0) {
+            const total = calculateTotal(); // Get total before clearing the cart
+            setTotalPrice(total); // Save the total to state
+
             localStorage.setItem('orders', JSON.stringify(cartItems)); // Store the order
             setOrderPlaced(true); // Show confirmation
             clearCart(); // Clear the cart after placing the order
@@ -72,7 +75,7 @@ export default function Cart() {
                 </table>
             </div>
             <div className="mt-4">
-                <h3>Total Price: ${calculateTotal().toFixed(2)}</h3>
+                <h3>Total Price: ৳{orderPlaced ? totalPrice.toFixed(2) : calculateTotal().toFixed(2)}</h3>
             </div>
             <button className="btn btn-primary mt-3" onClick={handleOrder}>
                 Place Order
