@@ -52,12 +52,19 @@ export default function Home() {
                     .filter((item) => item.CategoryName === category.CategoryName && item.name.toLowerCase().includes(search.toLowerCase()))
                     .map((filteredItem) => (
                       <div key={filteredItem._id} className="col">
-                        <Card
-                          foodName={filteredItem.name}
-                          item={filteredItem}
-                          options={filteredItem.options[0]}
-                          ImgSrc={filteredItem.img}
-                        />
+                        {filteredItem.name.toLowerCase().includes("pizza") ? (
+                          <div className="text-center text-white">
+                            <img src={filteredItem.img} alt={filteredItem.name} className="img-fluid" />
+                            <p>Pizza is not available</p>
+                          </div>
+                        ) : (
+                          <Card
+                            foodName={filteredItem.name}
+                            item={filteredItem}
+                            options={filteredItem.options[0]}
+                            ImgSrc={filteredItem.img}
+                          />
+                        )}
                       </div>
                     ))}
               </div>
