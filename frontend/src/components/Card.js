@@ -14,7 +14,6 @@ export default function Card({ foodName, item, options, ImgSrc }) {
     
         addToCart(item, quantity, size, selectedPrice);
     };
-    
 
     return (
         <div className="card mb-3 bg-dark text-white" style={{ maxWidth: "18rem" }}>
@@ -43,13 +42,13 @@ export default function Card({ foodName, item, options, ImgSrc }) {
                 </div>
                 <div className='mt-3'>
                     <h6 className='d-inline'>Total Price: </h6>
-                    <span>{size === 'half' ? options.half : options.full}</span>
+                    {/* Display price with BDT symbol */}
+                    <span>৳{size === 'half' ? options.half : options.full}</span>
                 </div>
                 <button className='btn btn-success mt-2' onClick={handleAddToCart}>
                     Add to Cart
                 </button>
             </div>
         </div>
-        
     );
 }
